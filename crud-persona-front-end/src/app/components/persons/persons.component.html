@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="card mt-5">
+      <div class="card-header">
+        <button mat-raised-button  color="primary" (click)="openModalPerson()"
+        matTooltip="Agregar"
+        matTooltipClass="tooltip-red"
+        >
+          <mat-icon  fontIcon="add circle outline icon"></mat-icon>
+          Agregar</button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr class="table-active">
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Identificación</th>
+            <th>Fecha de Nacimiento</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of persons | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+            <td>{{person.firstName}}</td>
+            <td>{{person.lastName}}</td>
+            <td>{{person.identification}}</td>
+            <td>{{person.birth | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center">
+                <button mat-icon-button color="primary" (click)="openModalPerson(person, false, true, false)"
+                matTooltip="Editar"
+                matTooltipClass="tooltip-red">
+                    <mat-icon  fontIcon="edit icon"></mat-icon>
+                </button>
+
+                <button mat-icon-button color="accent" (click)="deletePerson(person)"
+                matTooltip="Eliminar"
+                matTooltipClass="tooltip-red">
+                    <mat-icon  fontIcon="delete outline icon"></mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="openModalPerson(person, false, false, true)"
+                matTooltip="ver"
+                matTooltipClass="tooltip-red">
+                    <mat-icon  fontIcon="visibility icon"></mat-icon>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+      <div class="mr-2">
+        <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="currentPage = $event">
+        </pagination-controls>
+      </div>
+      
+    </div>
+</div>

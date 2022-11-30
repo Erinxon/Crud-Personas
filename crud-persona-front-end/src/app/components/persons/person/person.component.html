@@ -1,0 +1,94 @@
+<h2 mat-dialog-title>
+    {{ data.add ? 'Agregar Persona' : data.edit ? 'Editar Persona' : 'Detalle Persona'}}
+</h2>
+<mat-dialog-content class="mat-typography">
+    <form class="row g-3 needs-validation" [formGroup]="form">
+        <div class="col-md-6">
+          <label class="form-label">Nombre <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="firstName">
+          <div class="text-danger" *ngIf="formInvalid && form?.invalid">
+            {{getError('firstName')}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Apellido <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="lastName">
+          <div class="text-danger"  *ngIf="formInvalid && form?.invalid">
+            {{getError('lastName')}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Identificación <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="identification">
+          <div class="text-danger"  *ngIf="formInvalid && form?.invalid">
+              {{getError('identification')}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label  class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
+          <input type="date" class="form-control" formControlName="birth">
+          <div class="text-danger"  *ngIf="formInvalid && form?.invalid">
+            {{getError('birth')}}
+          </div>
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">Medios de Contactos <span class="text-danger">*</span></label>
+            <div class="card">
+                <div class="card-header" *ngIf="!data?.view">
+                  <button mat-raised-button  color="primary" (click)="openContactMean()"
+                  matTooltip="Agregar"
+                  matTooltipClass="tooltip-red"
+                  >
+                    <mat-icon  fontIcon="add circle outline icon"></mat-icon>
+                    Agregar</button>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr class="table-active">
+                      <td>Medio de Contacto</td>
+                      <td>Contacto</td>
+                      <td class="text-center">Acciones</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let contactMean of contactMeans; index as i">
+                      <td>{{contactMean?.contactMeans?.description}}</td>
+                      <td>{{contactMean?.contact}}</td>
+                      <td class="text-center">
+                        <button mat-icon-button color="primary" *ngIf="!data?.view" (click)="openContactMean(contactMean, false, true, false)"
+                        matTooltip="Editar"
+                        matTooltipClass="tooltip-red"
+                        >
+                            <mat-icon fontIcon="edit icon"></mat-icon>
+                        </button>
+        
+                        <button mat-icon-button color="accent" *ngIf="!data?.view" (click)="deleteContactMeansPeople(contactMean, i)"
+                        matTooltip="Eliminar"
+                        matTooltipClass="tooltip-red"
+                        >
+                            <mat-icon fontIcon="delete outline icon"></mat-icon>
+                        </button>
+        
+                        <button mat-icon-button  (click)="openContactMean(contactMean, false, false, true)"
+                        matTooltip="ver"
+                        matTooltipClass="tooltip-red"
+                        >
+                            <mat-icon fontIcon="visibility icon"></mat-icon>
+                        </button>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="text-danger"  *ngIf="formInvalid && form?.invalid">
+                {{getError('contactMeansPeople')}}
+              </div>
+        </div>
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-button (click)="close()">Cerrar</button>
+  <button mat-raised-button (click)="save()" color="primary" *ngIf="!data?.view">
+    Guardar
+  </button>
+</mat-dialog-actions>

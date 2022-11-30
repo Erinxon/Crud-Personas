@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>
+    {{ data.add ? 'Agregar Medio de Contacto' : data.edit ? 'Editar Medio de Contacto' : 'Detalle Medio de Contacto'}}
+</h2>
+<mat-dialog-content class="mat-typography">
+    <form class="row g-3 needs-validation" [formGroup]="form">
+        <div class="col-md-6">
+          <label class="form-label">Medio de Contacto <span class="text-danger">*</span></label>
+          <select class="form-control  form-select"  formControlName="contactMeansId">
+            <option *ngFor="let contactMean of contactMeans" [ngValue]="contactMean.contactMeansId">{{contactMean.description}}</option>
+          </select>
+          <div class="text-danger" *ngIf="formInvalid && form?.invalid">
+            {{getError('contactMeansId')}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Contacto <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" formControlName="contact">
+          <div class="text-danger"  *ngIf="formInvalid && form?.invalid">
+            {{getError('contact')}}
+          </div>
+        </div>
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions [align]="'end'">
+  <button mat-button (click)="close()">Cerrar</button>
+  <button mat-raised-button (click)="save()" color="primary" *ngIf="!data?.view">
+    Guardar
+  </button>
+</mat-dialog-actions>
